@@ -22,14 +22,27 @@ class HomeTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Original
         loadTweet()
         
         
         
         myRefreshControl.addTarget(self, action: #selector(loadTweet), for: .valueChanged)
         tableView.refreshControl = myRefreshControl
+        
+        tableView.rowHeight = 250
 
   
+    }
+    
+    override func viewDidAppear( _ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.loadTweet()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // self.loadTweet()
     }
     
     
@@ -135,7 +148,11 @@ class HomeTableViewController: UITableViewController {
         }
     
         
+        //New
+        cell.setFavorite(tweetArray[indexPath.row]["favorited"] as! Bool)
+        cell.tweetId = tweetArray[indexPath.row]["id"] as! Int
         
+        cell.setRetweeted(tweetArray[indexPath.row]["retweeted"] as! Bool)
         
         return cell
     }
